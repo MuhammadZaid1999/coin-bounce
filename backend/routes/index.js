@@ -11,7 +11,7 @@ router.get('/test', (req, res) => res.json({msg: 'Working'}))
 // login
 router.post('/login', authController.login)
 // register
-router.post('/login', authController.register)
+router.post('/register', authController.register)
 // logout
 // refresh
 

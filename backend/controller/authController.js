@@ -25,8 +25,8 @@ const authController = {
         // 3. if email or username is already registered -> return an error
         const {username, name, email, password} = req.body;
         try{
-            const emailInUse = await User.exists(email);
-            const usernameInUse = await User.exists(username);
+            const emailInUse = await User.exists({email});
+            const usernameInUse = await User.exists({username});
 
             if(emailInUse){
                 const error = {

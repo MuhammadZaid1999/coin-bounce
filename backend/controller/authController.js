@@ -96,6 +96,7 @@ const authController = {
 
 
     },
+    
     async login(req, res, next) {
         // 1. validate user input
         // 2. if validation error, return error
@@ -194,7 +195,64 @@ const authController = {
 
         // 3. response
         res.status(200).json({user: null, auth: false})
+    },
+
+    async refresh(req, res, next) {
+        // 1. get refresh token from cookies
+        // 2. verify refresh token
+        // 3. generate new tokens
+        // 3. update refresh token in db, return response
+
+        const originalRefreshToken = req.cookies.refreshToken;
+        let id
+        try {
+            id = JWTService.verifyRefreshToken(originalRefreshToken)._id;
+        } catch (e) {
+            const error = {
+                status: 401,
+                message: 'Unauthorized'
+            }
+            return next(error)
+        }
+
+        try {
+            const match = RefreshToken.findOne({_id: id, token: originalRefreshToken})
+            if(!match){
+                const error = {
+                    status: 401,
+                    message: 'Unauthorized'
+                }
+                return next(error)
+            }
+        } catch (error) {
+            return next(error);
+        }
+
+        let user;
+        try {
+            const accessToken = JWTService.signAccessToken({_id: id}, '30m')
+            const refreshToken = JWTService.signRefreshToken({_id: id}, '30m')
+
+            await RefreshToken.updateOne({_id: id}, {token: refreshToken});
+
+            res.cookie('accessToken', accessToken, {
+                maxAge: 1000 * 60 * 60 * 24,
+                httpOnly: true 
+            })
+            res.cookie('refrehToken', refreshToken, {
+                maxAge: 1000 * 60 * 60 * 24,
+                httpOnly: true 
+            })
+
+            user = await User.findOne({_id: id})
+        } catch (error) {
+            return next(error);
+        }
+
+        const userDto = new UserDTO(user);
+        res.status(200).json({user: userDto, auth: true});
     }
+
 }
 
 module.exports = authController;

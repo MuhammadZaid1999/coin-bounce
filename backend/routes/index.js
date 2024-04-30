@@ -1,5 +1,6 @@
 const express = require('express');
 const authController = require('../controller/authController');
+const blogController = require('../controller/blogController');
 const auth = require('../middlewares/auth');
 
 const router = express.Router();
@@ -29,7 +30,7 @@ router.get('/blog/:id', auth, blogController.getById)
 // update
 router.put('/blog', auth, blogController.update)
 // delete
-router.delete('/blog/:id', auth, blogController.update)
+router.delete('/blog/:id', auth, blogController.delete)
 
 // comment
 // create comment

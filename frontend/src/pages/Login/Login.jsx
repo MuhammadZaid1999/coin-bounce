@@ -21,7 +21,7 @@ function Login(){
             password: values.password
         }
         const response = await login(data);
-        console.log(response)
+        
         if(response.status === 200){
             // 1. setUser
             const user = {

@@ -108,7 +108,24 @@ function Signup(){
                 errormessage = {errors.confirmPassword}
             />
 
-            <button className={styles.signupButton} onClick={handleSignup}>Sign Up</button>
+            <button 
+                className={styles.signupButton} 
+                onClick={handleSignup}
+                disabled={
+                    !values.name ||
+                    !values.username ||
+                    !values.password ||
+                    !values.confirmPassword ||
+                    !values.email ||
+                    errors.name ||
+                    errors.username ||
+                    errors.password ||
+                    errors.confirmPassword ||
+                    errors.email 
+                }
+            >
+                Sign Up
+            </button>
 
             <span>
                 Already have an account? 

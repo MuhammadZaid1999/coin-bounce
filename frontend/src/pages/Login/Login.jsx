@@ -75,6 +75,12 @@ function Login(){
             <button 
                 className={styles.logInButton}
                 onClick={handleLogin}
+                disabled={
+                    !values.username ||
+                    !values.password ||
+                    errors.username ||
+                    errors.password
+                }
             >
                 Log In
             </button>

@@ -125,8 +125,9 @@ const blogController = {
             blog = await Blog.findOne({_id: blogId});
 
             if(photo){
-                const previousPhoto = blog.photoPath;
-                previousPhoto.split('/').at(-1);
+                let previousPhoto = blog.photoPath;
+                previousPhoto = previousPhoto.split('/').at(-1);
+                console.log(previousPhoto)
                 fs.unlinkSync(`storage/${previousPhoto}`);
             
                 // read as a buffer

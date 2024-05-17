@@ -109,3 +109,13 @@ export const updateBlog = async (data) => {
     }
     return response;
 }
+
+export const autoLogin = async () => {
+    let response;
+    try{
+        response = await api.get('/refresh')
+    }catch(error){
+        return error;
+    }
+    return response;
+}

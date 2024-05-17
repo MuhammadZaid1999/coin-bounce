@@ -6,15 +6,16 @@ function CommentList({comments}){
         <div className={styles.commentListWrapper}>
             <div className={styles.commentList}>
                 {
-                    comments.lenth === 0 ?
+                    comments.lenth === 0 ? (
                     <div className={styles.noComments}>
                         No comments posted
                     </div>    
-                    :
+                    )
+                    : (
                     comments.map( comment => (
                         <Comment key={comment._id} comment={comment}/>
                     ))
-                }
+                )}
             </div>
         </div>
     )

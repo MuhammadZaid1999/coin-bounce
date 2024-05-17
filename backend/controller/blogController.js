@@ -127,7 +127,6 @@ const blogController = {
             if(photo){
                 let previousPhoto = blog.photoPath;
                 previousPhoto = previousPhoto.split('/').at(-1);
-                console.log(previousPhoto)
                 fs.unlinkSync(`storage/${previousPhoto}`);
             
                 // read as a buffer

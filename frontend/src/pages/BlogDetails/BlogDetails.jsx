@@ -47,7 +47,7 @@ function BlogDetails(){
             content: newComment
         }
         const response = await postComment(data);
-        if(response.status === 201){
+        if(response.status === 200){
             setNewComment("");
             setReload(!reload);
         }

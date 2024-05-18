@@ -231,7 +231,7 @@ const authController = {
         let user;
         try {
             const accessToken = JWTService.signAccessToken({_id: id}, '30m')
-            const refreshToken = JWTService.signRefreshToken({_id: id}, '30m')
+            const refreshToken = JWTService.signRefreshToken({_id: id}, '60m')
 
             await RefreshToken.updateOne({_id: id}, {token: refreshToken});
 

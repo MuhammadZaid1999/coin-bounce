@@ -119,3 +119,31 @@ export const autoLogin = async () => {
     }
     return response;
 }
+
+
+// auto token refresh
+
+// /protected-resource -> 401 || 500
+// /refresh -> authenthicated state
+// /protected-resource
+
+api.interceptors.response.use(
+    config => config,
+    async(error) => {
+        const originalReq = error.config;
+
+        if((error.response.status === 401 || error.response.status === 500) && originalReq && !originalReq._isRetry){
+            originalReq._isRetry = true;
+
+            try {
+                await axios.get(`${process.env.REACT_APP_INTERNAL_API_PATH}/refresh`, {
+                  withCredentials: true,
+                });
+        
+                return api.request(originalReq);
+              } catch (error) {
+                return error;
+            }
+        }
+    }
+)

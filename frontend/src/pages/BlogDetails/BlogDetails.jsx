@@ -21,7 +21,6 @@ function BlogDetails(){
     const blogId = params.id;
 
     const username = useSelector(state => state.user.username);
-    console.log(username)
     const userId = useSelector(state => state.user._id);
     
     useEffect(() => {
